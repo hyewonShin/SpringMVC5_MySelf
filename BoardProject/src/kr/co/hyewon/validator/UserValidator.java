@@ -18,15 +18,19 @@ public class UserValidator implements org.springframework.validation.Validator {
 
 		UserBean userBean = (UserBean)target;
 		
-		// 비밀번호 확인 
-		if(userBean.getUser_pw().equals(userBean.getUser_pw2()) == false) {
-			errors.rejectValue("user_pw", "NotEquals");
-			errors.rejectValue("user_pw2", "NotEquals");
-		}
+		String beanName = errors.getObjectName();
 		
-		// 아이디 중복확인
-		if(userBean.isUserIdExist() == false) {
-			errors.rejectValue("user_id", "DontCheckUserIdExist");
+		// 회원가입에서 비밀번호 재확인 
+		if(beanName.equals("joinUserBean")) {
+			if(userBean.getUser_pw().equals(userBean.getUser_pw2()) == false) {
+				errors.rejectValue("user_pw", "NotEquals");
+				errors.rejectValue("user_pw2", "NotEquals");
+			}
+			
+			// 아이디 중복확인
+			if(userBean.isUserIdExist() == false) {
+				errors.rejectValue("user_id", "DontCheckUserIdExist");
+			}
 		}
 	}
 }
