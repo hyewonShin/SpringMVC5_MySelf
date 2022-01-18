@@ -12,6 +12,18 @@ public class UserService {
 	@Autowired
 	private UserDao userDao;
 	
+	// 아이디 중복검사 
+	public boolean checkUserIdExist(String user_id) {
+		
+		String user_name = userDao.checkUserIdExist(user_id);
+	
+		if(user_name == null) {
+			return true;
+		} else {
+			return false;
+		}
+	}
+	
 	public void addUserInfo(UserBean joinUserBean) {
 		userDao.addUserInfo(joinUserBean);
 	}
