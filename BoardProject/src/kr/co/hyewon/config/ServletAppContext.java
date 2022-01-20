@@ -22,6 +22,7 @@ import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import kr.co.hyewon.bean.UserBean;
+import kr.co.hyewon.interceptor.CheckLoginInterceptor;
 import kr.co.hyewon.interceptor.TopMenuInterceptor;
 import kr.co.hyewon.mapper.BoardMapper;
 import kr.co.hyewon.mapper.TopMenuMapper;
@@ -129,9 +130,14 @@ public class ServletAppContext implements WebMvcConfigurer{
 		
 		// TopMenuInterceptor 등록
 		TopMenuInterceptor topMenuInterceptor = new TopMenuInterceptor(topMenuService, loginUserBean);
-		
 		InterceptorRegistration reg1 = registry.addInterceptor(topMenuInterceptor);
 		reg1.addPathPatterns("/**");
+
+		// CheckLoginInterceptor 등록
+		CheckLoginInterceptor CheckLoginInterceptor = new CheckLoginInterceptor(loginUserBean);
+		InterceptorRegistration reg2 = registry.addInterceptor(CheckLoginInterceptor);
+		reg2.addPathPatterns("/user/modify","user/logout","/board/*");
+		reg2.excludePathPatterns("/board/main");
 		
 	}
 	
