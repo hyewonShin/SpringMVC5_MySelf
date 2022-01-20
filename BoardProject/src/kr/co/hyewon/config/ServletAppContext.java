@@ -1,5 +1,7 @@
 package kr.co.hyewon.config;
 
+import javax.annotation.Resource;
+
 import org.apache.commons.dbcp2.BasicDataSource;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -19,6 +21,7 @@ import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry
 import org.springframework.web.servlet.config.annotation.ViewResolverRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
+import kr.co.hyewon.bean.UserBean;
 import kr.co.hyewon.interceptor.TopMenuInterceptor;
 import kr.co.hyewon.mapper.BoardMapper;
 import kr.co.hyewon.mapper.TopMenuMapper;
@@ -52,6 +55,9 @@ public class ServletAppContext implements WebMvcConfigurer{
 	
 	@Autowired
 	private TopMenuService topMenuService;
+	
+	@Resource(name = "loginUserBean")
+	private UserBean loginUserBean;
 	
 	
 	// Controller의 메서드가 반환하는 jsp의 이름 앞뒤에 경로와 확장자를 붙혀주도록 설정한다.
@@ -122,7 +128,8 @@ public class ServletAppContext implements WebMvcConfigurer{
 		WebMvcConfigurer.super.addInterceptors(registry);
 		
 		// TopMenuInterceptor 등록
-		TopMenuInterceptor topMenuInterceptor = new TopMenuInterceptor(topMenuService);
+		TopMenuInterceptor topMenuInterceptor = new TopMenuInterceptor(topMenuService, loginUserBean);
+		
 		InterceptorRegistration reg1 = registry.addInterceptor(topMenuInterceptor);
 		reg1.addPathPatterns("/**");
 		

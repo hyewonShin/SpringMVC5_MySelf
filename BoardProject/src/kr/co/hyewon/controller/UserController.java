@@ -79,6 +79,14 @@ public class UserController {
 	public String modify() {
 		return "user/modify";
 	}
+	
+	@GetMapping("/logout")
+	public String logout() {
+		
+		loginUserBean.setUserLogin(false);
+		
+		return "user/logout";
+	}
 
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
