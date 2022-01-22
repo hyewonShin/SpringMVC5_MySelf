@@ -47,4 +47,32 @@ public class UserService {
 			loginUserBean.setUserLogin(true); //UserLogin에 true를 넣어준다.
 		}
 	}
+	
+	// 정보수정 화면 사용자 정보 출력 
+	public void getModifyUserInfo(UserBean modifyUserBean) {
+
+		UserBean tempModifyUserBean = userDao.getModifyUserInfo(loginUserBean.getUser_idx());
+		
+		modifyUserBean.setUser_id(tempModifyUserBean.getUser_id());
+		modifyUserBean.setUser_name(tempModifyUserBean.getUser_name());
+		modifyUserBean.setUser_idx(tempModifyUserBean.getUser_idx());
+	}
+	
+	// 정보수정 - 업데이트
+	public void modifyUserInfo(UserBean modifyUserBean) {
+		
+		//modifyUsreBean에 로그인된 사용자의 idx를 넣는다.
+		modifyUserBean.setUser_idx(loginUserBean.getUser_idx());
+		
+		userDao.modifyUserInfo(modifyUserBean);
+	}
 }
+
+
+
+
+
+
+
+
+

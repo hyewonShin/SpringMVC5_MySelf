@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.co.hyewon.bean.UserBean;
+import kr.co.hyewon.dao.UserDao;
 import kr.co.hyewon.service.UserService;
 import kr.co.hyewon.validator.UserValidator;
 
@@ -76,24 +77,39 @@ public class UserController {
 	}
 
 	@GetMapping("/modify")
-	public String modify() {
+	public String modify(@ModelAttribute("modifyUserBean") UserBean modifyUserBean) {
+
+		userService.getModifyUserInfo(modifyUserBean);
+
 		return "user/modify";
 	}
-	
+
+	@PostMapping("/modify_pro")
+	public String modif_pro(@Valid @ModelAttribute("modifyUserBean") UserBean modifyUserBean, BindingResult result) {
+
+		if(result.hasErrors()) {
+			return "user/modify";
+		}
+		
+		userService.modifyUserInfo(modifyUserBean);
+		
+		return "user/modify_success";
+	}
+
 	@GetMapping("/logout")
 	public String logout() {
-		
+
 		loginUserBean.setUserLogin(false);
-		
+
 		return "user/logout";
 	}
-	
+
 	@GetMapping("not_login")
 	public String not_login() {
 		return "user/not_login";
 	}
-	
-	
+
+
 	@InitBinder
 	public void initBinder(WebDataBinder binder) {
 		UserValidator validator1 = new UserValidator();
