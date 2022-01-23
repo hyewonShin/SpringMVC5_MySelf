@@ -16,8 +16,9 @@ public class ContentBean {
 	// 클라이언트가 브라우저에서 보낸 파일을 담는 변수 
 	private MultipartFile upload_file;
 	
-	// 서버에 저장되는  파일의 이름
+	// 서버(데이터베이스)에 저장되는  파일의 이름
 	private String content_file;
+	
 	private int content_writer_idx;
 	private int content_board_idx;
 	private String content_date;

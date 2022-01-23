@@ -2,6 +2,7 @@ package kr.co.hyewon.controller;
 
 import javax.validation.Valid;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -12,11 +13,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.co.hyewon.bean.ContentBean;
+import kr.co.hyewon.service.BoardService;
 
 @Controller
 @RequestMapping("board")
 public class BoardController {
 
+	@Autowired
+	private BoardService boardService;
+	
 	@GetMapping("/board_main")
 	public String main(@RequestParam("board_info_idx") int board_info_idx,
 					   Model model) {
@@ -27,7 +32,11 @@ public class BoardController {
 	}
 	
 	@GetMapping("/write")
-	public String write(@ModelAttribute("writeContentBean") ContentBean writeContentBean) {
+	public String write(@ModelAttribute("writeContentBean") ContentBean writeContentBean,
+						@RequestParam("board_info_idx") int board_info_idx) {
+		
+		writeContentBean.setContent_board_idx(board_info_idx);
+		
 		return "board/write";
 	}
 
@@ -37,7 +46,9 @@ public class BoardController {
 			return "board/write";
 		}
 		
-		return "board/write_suceess";
+		boardService.addContentInfo(writeContentBean);
+		
+		return "board/write_success";
 	}
 	
 	@GetMapping("/read")
