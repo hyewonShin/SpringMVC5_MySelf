@@ -63,7 +63,7 @@
 						
 					</tr>
 					<tr>
-						<td class="text-center d-none d-md-table-cell">10</td>
+						<td class="text-center d-none d-md-t0-able-cell">10</td>
 						<td><a href='board_read.html'>글 제목 입니다</a></td>
 						<td class="text-center d-none d-md-table-cell">홍길동</td>
 						<td class="text-center d-none d-md-table-cell">2018-12-12</td>
@@ -160,7 +160,7 @@
 			</div>
 			
 			<div class="text-right">
-				<a href="${root }board/write" class="btn btn-primary">글쓰기</a>
+				<a href="${root }board/write?board_info_idx=${board_info_idx}" class="btn btn-primary">글쓰기</a>
 			</div>
 			
 		</div>

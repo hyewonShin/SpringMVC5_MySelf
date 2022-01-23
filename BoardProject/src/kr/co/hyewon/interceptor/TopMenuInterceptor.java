@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import kr.co.hyewon.bean.BoardInfoBean;
@@ -13,6 +14,7 @@ import kr.co.hyewon.service.TopMenuService;
 
 public class TopMenuInterceptor implements HandlerInterceptor {
 
+	@Autowired
 	private TopMenuService topMenuService;
 	private UserBean loginUserBean;
 	
