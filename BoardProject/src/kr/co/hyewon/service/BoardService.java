@@ -1,6 +1,7 @@
 package kr.co.hyewon.service;
 
 import java.io.File;
+import java.util.List;
 
 import javax.annotation.Resource;
 
@@ -54,4 +55,29 @@ public class BoardService {
 
 		boardDao.addContentInfo(writeContentBean);
 	}
+	
+	public String getBaordInfoName(int board_info_idx) {
+		return boardDao.getBaordInfoName(board_info_idx);
+	}
+	
+	public List<ContentBean> getContentList(int board_info_idx) {
+		return boardDao.getContentList(board_info_idx);
+	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
