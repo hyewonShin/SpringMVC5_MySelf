@@ -71,7 +71,7 @@ public class UserController {
 			return "user/join";
 		}
 
-		//userService.addUserInfo(joinUserBean);
+		userService.addUserInfo(joinUserBean);
 
 		return "user/join_success";
 	}
