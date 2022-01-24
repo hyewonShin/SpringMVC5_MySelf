@@ -116,7 +116,15 @@ public class BoardController {
 	}
 
 	@GetMapping("/delete")
-	public String delete() {
+	public String delete(@RequestParam("board_info_idx") int board_info_idx,
+						 @RequestParam("content_idx") int content_idx,
+						 Model model) {
+		
+		boardService.deleteContentInfo(content_idx);
+		
+		// 삭제 후 글목록 페이지로 이동할 때 사용함.
+		model.addAttribute("board_info_idx", board_info_idx);
+		
 		return "board/delete";
 	}
 
