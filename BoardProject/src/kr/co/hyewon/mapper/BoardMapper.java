@@ -5,6 +5,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectKey;
+import org.apache.ibatis.annotations.Update;
 
 import kr.co.hyewon.bean.ContentBean;
 
@@ -47,6 +48,12 @@ public interface BoardMapper {
 			"      and content_idx = #{content_idx}")
 	ContentBean getContentInfo(int content_idx);
 
+	// 정보수정 처리
+	@Update("update content_table " +
+			"set content_subject = #{content_subject}, content_text = #{content_text}, " +
+			"content_file = #{content_file, jdbcType=VARCHAR} " +
+			"where content_idx = #{content_idx}")
+	void modifyContentInfo(ContentBean modifyContentBean);
 }
 
 	
