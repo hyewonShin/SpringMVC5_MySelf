@@ -29,6 +29,7 @@
 					<form:form action="${root }board/modify_pro" method="post" modelAttribute="modifyContentBean" enctype="multipart/form-data">
 						<form:hidden path="content_idx"/>
 						<form:hidden path="content_board_idx"/>
+						<input type="hidden" name="page" value="${page }"/> 
 						<div class="form-group">
 							<form:label path="content_writer_name">작성자</form:label>
 							<form:input path="content_writer_name" class="form-control" readonly="true"/>
@@ -38,7 +39,7 @@
 							<form:input path="content_date" class="form-control" readonly="true"/>
 						</div>
 						<div class="form-group">
-							<form:label path="content_subject">작성자</form:label>
+							<form:label path="content_subject">제목</form:label>
 							<form:input path="content_subject" class="form-control"/>
 							<form:errors path="content_subject" style='color:red'/>
 						</div>
@@ -58,7 +59,7 @@
 						<div class="form-group">
 							<div class="text-right">
 								<form:button class="btn btn-primary">수정완료</form:button>
-								<a href="${root }board/read?board_info_idx=${board_info_idx}&content_idx=${content_idx}" class="btn btn-info">취소</a>
+								<a href="${root }board/read?board_info_idx=${board_info_idx}&content_idx=${content_idx}&page=${page}" class="btn btn-info">취소</a>
 							</div>
 						</div>
 					</form:form>

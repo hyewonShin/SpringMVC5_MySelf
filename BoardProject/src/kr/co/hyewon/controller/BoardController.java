@@ -47,7 +47,7 @@ public class BoardController {
 		model.addAttribute("pageBean", pageBean);
 
 		model.addAttribute("page", page);
-
+		
 		return "board/board_main";
 	}
 
@@ -73,8 +73,9 @@ public class BoardController {
 
 	@GetMapping("/read")
 	public String read(@RequestParam("board_info_idx") int board_info_idx,
-			@RequestParam("content_idx") int content_idx,
-			Model model){
+					   @RequestParam("content_idx") int content_idx,
+					   @RequestParam("page") int page,
+					   Model model){
 
 		model.addAttribute("board_info_idx",board_info_idx);
 		model.addAttribute("content_idx",content_idx);
@@ -83,18 +84,21 @@ public class BoardController {
 		model.addAttribute("readContentBean",readContentBean);
 
 		model.addAttribute("loginUserBean",loginUserBean);
+		model.addAttribute("page", page);
 
 		return "board/read";
 	}
 
 	@GetMapping("/board_modify")
 	public String board_modify(@RequestParam("board_info_idx") int board_info_idx,
-			@RequestParam("content_idx") int content_idx,
-			@ModelAttribute("modifyContentBean") ContentBean modifyContentBean,
-			Model model) {
+								@RequestParam("content_idx") int content_idx,
+								@ModelAttribute("modifyContentBean") ContentBean modifyContentBean,
+								@RequestParam("page") int page,
+								Model model) {
 
 		model.addAttribute("board_info_idx",board_info_idx );
 		model.addAttribute("content_idx",content_idx );
+		model.addAttribute("page",page);
 
 		ContentBean tempContentBean = boardService.getContentInfo(content_idx);
 
@@ -112,7 +116,12 @@ public class BoardController {
 
 	@PostMapping("/modify_pro")
 	public String modify_pro(@Valid @ModelAttribute("modifyContentBean") ContentBean modifyContentBean,
-			BindingResult result) {
+							BindingResult result,
+							@RequestParam("page") int page,
+							Model model) {
+		
+		model.addAttribute("page",page);
+		
 		if(result.hasErrors()) {
 			return "board/board_modify";
 		}
