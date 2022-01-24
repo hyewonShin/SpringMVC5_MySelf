@@ -7,6 +7,7 @@ import org.apache.ibatis.annotations.Insert;
 import org.apache.ibatis.annotations.Select;
 import org.apache.ibatis.annotations.SelectKey;
 import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.session.RowBounds;
 
 import kr.co.hyewon.bean.ContentBean;
 
@@ -38,7 +39,7 @@ public interface BoardMapper {
 			"where a1.content_writer_idx = a2.user_idx " + 
 			"    and a1.content_board_idx = #{board_info_idx} " + 
 			"order by a1.content_idx desc")
-	List<ContentBean> getContentList(int board_info_idx);
+	List<ContentBean> getContentList(int board_info_idx, RowBounds rowBounds);
 
 	// 글 읽는 페이지 데이터 출력 
 	@Select("select a2.user_name as content_writer_name, " + 
@@ -59,6 +60,11 @@ public interface BoardMapper {
 	// 삭제 처리
 	@Delete("delete from content_table where content_idx = #{content_idx}")
 	void deleteContentInfo(int content_idx);
+	
+	// 페이징 - 전체 글의 개수 가져오기
+	@Select("select count(*) from content_table where content_board_idx = #{content_board_idx}")
+	int getContentCnt(int content_board_idx);
+
 }
 
 	

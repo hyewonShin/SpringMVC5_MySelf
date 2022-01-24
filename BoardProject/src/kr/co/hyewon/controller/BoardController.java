@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import kr.co.hyewon.bean.ContentBean;
+import kr.co.hyewon.bean.PageBean;
 import kr.co.hyewon.bean.UserBean;
 import kr.co.hyewon.service.BoardService;
 
@@ -25,31 +26,37 @@ public class BoardController {
 
 	@Autowired
 	private BoardService boardService;
-	
+
 	@Resource(name = "loginUserBean")
 	private UserBean loginUserBean;
-	
+
 	@GetMapping("/board_main")
 	public String main(@RequestParam("board_info_idx") int board_info_idx,
-					   Model model) {
-		
+			@RequestParam(value = "page", defaultValue = "1") int page,
+			Model model) {
+
 		model.addAttribute("board_info_idx", board_info_idx);
-		
-		String boardInfoName = boardService.getBaordInfoName(board_info_idx);
-		model.addAttribute("boardInfoName",boardInfoName);
-		
-		List<ContentBean> contentList = boardService.getContentList(board_info_idx);
+
+		String boardInfoName = boardService.getBoardInfoName(board_info_idx);
+		model.addAttribute("boardInfoName", boardInfoName);
+
+		List<ContentBean> contentList = boardService.getContentList(board_info_idx, page);
 		model.addAttribute("contentList", contentList);
-		
+
+		PageBean pageBean = boardService.getContentCnt(board_info_idx, page);
+		model.addAttribute("pageBean", pageBean);
+
+		model.addAttribute("page", page);
+
 		return "board/board_main";
 	}
-	
+
 	@GetMapping("/write")
 	public String write(@ModelAttribute("writeContentBean") ContentBean writeContentBean,
-						@RequestParam("board_info_idx") int board_info_idx) {
-		
+			@RequestParam("board_info_idx") int board_info_idx) {
+
 		writeContentBean.setContent_board_idx(board_info_idx);
-		
+
 		return "board/write";
 	}
 
@@ -58,39 +65,39 @@ public class BoardController {
 		if(result.hasErrors()) {
 			return "board/write";
 		}
-		
+
 		boardService.addContentInfo(writeContentBean);
-		
+
 		return "board/write_success";
 	}
-	
+
 	@GetMapping("/read")
 	public String read(@RequestParam("board_info_idx") int board_info_idx,
-					   @RequestParam("content_idx") int content_idx,
-					   Model model){
-		
+			@RequestParam("content_idx") int content_idx,
+			Model model){
+
 		model.addAttribute("board_info_idx",board_info_idx);
 		model.addAttribute("content_idx",content_idx);
-		
+
 		ContentBean readContentBean = boardService.getContentInfo(content_idx);
 		model.addAttribute("readContentBean",readContentBean);
 
 		model.addAttribute("loginUserBean",loginUserBean);
-		
+
 		return "board/read";
 	}
 
 	@GetMapping("/board_modify")
 	public String board_modify(@RequestParam("board_info_idx") int board_info_idx,
-							   @RequestParam("content_idx") int content_idx,
-							   @ModelAttribute("modifyContentBean") ContentBean modifyContentBean,
-							   Model model) {
-		
+			@RequestParam("content_idx") int content_idx,
+			@ModelAttribute("modifyContentBean") ContentBean modifyContentBean,
+			Model model) {
+
 		model.addAttribute("board_info_idx",board_info_idx );
 		model.addAttribute("content_idx",content_idx );
-		
+
 		ContentBean tempContentBean = boardService.getContentInfo(content_idx);
-		
+
 		modifyContentBean.setContent_writer_name(tempContentBean.getContent_writer_name());
 		modifyContentBean.setContent_date(tempContentBean.getContent_date());
 		modifyContentBean.setContent_subject(tempContentBean.getContent_subject());
@@ -99,32 +106,32 @@ public class BoardController {
 		modifyContentBean.setContent_writer_idx(tempContentBean.getContent_writer_idx());
 		modifyContentBean.setContent_board_idx(board_info_idx);
 		modifyContentBean.setContent_idx(content_idx);
-		
+
 		return "board/board_modify";
 	}
-	
+
 	@PostMapping("/modify_pro")
 	public String modify_pro(@Valid @ModelAttribute("modifyContentBean") ContentBean modifyContentBean,
-							 BindingResult result) {
+			BindingResult result) {
 		if(result.hasErrors()) {
 			return "board/board_modify";
 		}
-		
+
 		boardService.modifyContentInfo(modifyContentBean);
-		
+
 		return "board/modify_success";
 	}
 
 	@GetMapping("/delete")
 	public String delete(@RequestParam("board_info_idx") int board_info_idx,
-						 @RequestParam("content_idx") int content_idx,
-						 Model model) {
-		
+			@RequestParam("content_idx") int content_idx,
+			Model model) {
+
 		boardService.deleteContentInfo(content_idx);
-		
+
 		// 삭제 후 글목록 페이지로 이동할 때 사용함.
 		model.addAttribute("board_info_idx", board_info_idx);
-		
+
 		return "board/delete";
 	}
 
@@ -132,7 +139,7 @@ public class BoardController {
 	public String not_writer() {
 		return "board/not_writer";
 	}
-	
-	
-	
+
+
+
 }
