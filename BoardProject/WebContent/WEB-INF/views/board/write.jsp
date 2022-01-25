@@ -46,7 +46,7 @@
 						</div>
 						<div class="form-group">
 							<div class="text-right">
-								<form:button class="btn btn-primary">작성하기</form:button>
+								<form:button class="btn btn-info">작성하기</form:button>
 							</div>
 						</div>
 					

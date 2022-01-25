@@ -3,8 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <c:set var='root' value="${pageContext.request.contextPath }/" />
 <!-- 상단 메뉴 부분 -->
-<nav
-	class="navbar navbar-expand-md bg-dark navbar-dark fixed-top shadow-lg">
+<nav class="navbar navbar-expand-md alert-info navbar-light fixed-top shadow-lg">
 	<a class="navbar-brand" href="${root }main">HYEWON'S PORTFOLIO</a>
 	<button class="navbar-toggler" type="button" data-toggle="collapse"
 		data-target="#navMenu">

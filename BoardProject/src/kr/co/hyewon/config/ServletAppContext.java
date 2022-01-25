@@ -141,13 +141,13 @@ public class ServletAppContext implements WebMvcConfigurer{
 		// CheckLoginInterceptor 등록
 		CheckLoginInterceptor CheckLoginInterceptor = new CheckLoginInterceptor(loginUserBean);
 		InterceptorRegistration reg2 = registry.addInterceptor(CheckLoginInterceptor);
-		reg2.addPathPatterns("/user/modify","/user/logout","/board/*");
+		reg2.addPathPatterns("/user/modify","/user/logout");
 		reg2.excludePathPatterns("/board/main");
 
 		// CheckWriterInterceptor 등록
 		CheckWriterInterceptor CheckWriterInterceptor = new CheckWriterInterceptor(loginUserBean, boardService);
 		InterceptorRegistration reg3 = registry.addInterceptor(CheckWriterInterceptor);
-		reg3.addPathPatterns("/board/board_modify","/board/delete");
+		reg3.addPathPatterns("/board/board_modify","/board/delete","/board/*");
 		
 	}
 	

@@ -8,7 +8,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>게시판 프로젝트</title>
-<!-- Bootstrap CDN -->
+<!-- Bootstrap CDN 	-->
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/css/bootstrap.min.css">
 <script
@@ -18,6 +18,7 @@
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
 </head>
+
 <body>
 
 	<!-- 상단 메뉴 부분 -->
@@ -42,7 +43,7 @@
 								<tbody>
 									<c:forEach var="obj" items="${sub_list }">
 										<tr>
-											<td class="text-center">${obj.content_idx }</td>
+											<td class="text-center text-dark">${obj.content_idx }</td>
 											<th><a href='board/read?board_info_idx=${board_list[idx.index].board_info_idx }&content_idx=${obj.content_idx}&page=1'>${obj.content_subject }</a></th>
 											<td class="text-center d-none d-xl-table-cell">${obj.content_date }</td>
 										</tr>
@@ -50,7 +51,7 @@
 								</tbody>
 							</table>
 
-							<a href="board/board_main?board_info_idx=${board_list[idx.index].board_info_idx }" class="btn btn-primary">더보기</a>
+							<a href="board/board_main?board_info_idx=${board_list[idx.index].board_info_idx }" class="btn float-right btn btn-info">더보기</a>
 						</div>
 					</div>
 				</div>

@@ -19,5 +19,36 @@ public class BoardInfoBean {
 	}
 	
 	
+	// 답글기능을 위한 vo
+	
+	//원글 번호 
+	private int originNo;
+	
+	//원글(답글포함)에 대한 순서
+	private int groupOrd;
+	
+	//답글 계층 
+	private int groupLayer;
+
+	public int getOriginNo() {
+		return originNo;
+	}
+	public void setOriginNo(int originNo) {
+		this.originNo = originNo;
+	}
+	public int getGroupOrd() {
+		return groupOrd;
+	}
+	public void setGroupOrd(int groupOrd) {
+		this.groupOrd = groupOrd;
+	}
+	public int getGroupLayer() {
+		return groupLayer;
+	}
+	public void setGroupLayer(int groupLayer) {
+		this.groupLayer = groupLayer;
+	}
+	
+	
 
 }

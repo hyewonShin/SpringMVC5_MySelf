@@ -97,7 +97,7 @@
 
 				<div class="text-right">
 					<a href="${root }board/write?board_info_idx=${board_info_idx}"
-						class="btn btn-primary">글쓰기</a>
+						class="btn btn-info">글쓰기</a>
 				</div>
 
 			</div>
